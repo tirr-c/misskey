@@ -106,12 +106,17 @@ export class RelayService {
 	}
 
 	@bindThis
+	public async getAcceptedRelays(): Promise<Relay[]> {
+		return this.relaysCache.fetch(() => this.relaysRepository.findBy({
+			status: 'accepted',
+		}));
+	}
+
+	@bindThis
 	public async deliverToRelays(user: { id: User['id']; host: null; }, activity: any): Promise<void> {
 		if (activity == null) return;
 
-		const relays = await this.relaysCache.fetch(() => this.relaysRepository.findBy({
-			status: 'accepted',
-		}));
+		const relays = await this.getAcceptedRelays();
 		if (relays.length === 0) return;
 
 		const copy = deepClone(activity);
