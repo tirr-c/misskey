@@ -79,6 +79,7 @@ export const Square = {
 		...common.args,
 		specify: {
 			...common.args.specify,
+			id: 'ad-square',
 			place: 'square',
 			imageUrl:
 				'https://github.com/misskey-dev/misskey/blob/master/packages/frontend/assets/about-icon.png?raw=true',
@@ -91,6 +92,7 @@ export const Horizontal = {
 		...common.args,
 		specify: {
 			...common.args.specify,
+			id: 'ad-horizontal',
 			place: 'horizontal',
 			imageUrl:
 				'https://github.com/misskey-dev/misskey/blob/master/packages/frontend/assets/fedi.jpg?raw=true',
@@ -103,6 +105,7 @@ export const HorizontalBig = {
 		...common.args,
 		specify: {
 			...common.args.specify,
+			id: 'ad-horizontal-big',
 			place: 'horizontal-big',
 			imageUrl:
 				'https://github.com/misskey-dev/misskey/blob/master/packages/frontend/assets/fedi.jpg?raw=true',
@@ -115,6 +118,7 @@ export const ZeroRatio = {
 		...Square.args,
 		specify: {
 			...Square.args.specify,
+			id: 'ad-zero-ratio',
 			ratio: 0,
 		},
 		__hasReduce: false,
