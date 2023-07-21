@@ -1,6 +1,6 @@
 {
 	"name": "misskey",
-	"version": "13.14.0-tirr.1",
+	"version": "13.14.1+tirr.0",
 	"codename": "nasubi",
 	"repository": {
 		"type": "git",
