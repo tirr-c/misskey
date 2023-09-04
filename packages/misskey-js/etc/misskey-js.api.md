@@ -12,6 +12,15 @@ export type Acct = {
     host: string | null;
 };
 
+declare namespace acct {
+    export {
+        parse,
+        toString_2 as toString,
+        Acct
+    }
+}
+export { acct }
+
 // Warning: (ae-forgotten-export) The symbol "TODO_2" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -2462,6 +2471,7 @@ type MeDetailed = UserDetailed & {
     receiveAnnouncementEmail: boolean;
     usePasswordLessLogin: boolean;
     unreadAnnouncements: Announcement[];
+    twoFactorBackupCodesStock: 'full' | 'partial' | 'none';
     [other: string]: any;
 };
 
@@ -2658,6 +2668,9 @@ type PageEvent = {
 };
 
 // @public (undocumented)
+function parse(acct: string): Acct;
+
+// @public (undocumented)
 export const permissions: string[];
 
 // @public (undocumented)
@@ -2734,6 +2747,9 @@ export class Stream extends EventEmitter<StreamEvents> {
     // (undocumented)
     useChannel<C extends keyof Channels>(channel: C, params?: Channels[C]['params'], name?: string): ChannelConnection<Channels[C]>;
 }
+
+// @public (undocumented)
+function toString_2(acct: Acct): string;
 
 // @public (undocumented)
 type User = UserLite | UserDetailed;
