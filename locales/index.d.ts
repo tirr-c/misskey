@@ -1123,6 +1123,12 @@ export interface Locale {
     "unnotifyNotes": string;
     "authentication": string;
     "authenticationRequiredToContinue": string;
+    "dateAndTime": string;
+    "showRenotes": string;
+    "edited": string;
+    "notificationRecieveConfig": string;
+    "mutualFollow": string;
+    "fileAttachedOnly": string;
     "_announcement": {
         "forExistingUsers": string;
         "forExistingUsersDescription": string;
@@ -1536,6 +1542,7 @@ export interface Locale {
             "gtlAvailable": string;
             "ltlAvailable": string;
             "canPublicNote": string;
+            "canEditNote": string;
             "canInvite": string;
             "inviteLimit": string;
             "inviteLimitCycle": string;
@@ -2250,9 +2257,11 @@ export interface Locale {
         };
     };
     "_moderationLogTypes": {
+        "createRole": string;
+        "deleteRole": string;
+        "updateRole": string;
         "assignRole": string;
         "unassignRole": string;
-        "updateRole": string;
         "suspend": string;
         "unsuspend": string;
         "addCustomEmoji": string;
@@ -2273,6 +2282,11 @@ export interface Locale {
         "unsuspendRemoteInstance": string;
         "markSensitiveDriveFile": string;
         "unmarkSensitiveDriveFile": string;
+        "resolveAbuseReport": string;
+        "createInvitation": string;
+        "createAd": string;
+        "deleteAd": string;
+        "updateAd": string;
     };
 }
 declare const locales: {
