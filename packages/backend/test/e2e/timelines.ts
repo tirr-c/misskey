@@ -727,7 +727,7 @@ describe('Timelines', () => {
 
 			await waitForPushToTl();
 
-			const res = await api('/notes/hybrid-timeline', { }, alice);
+			const res = await api('/notes/hybrid-timeline', { limit: 100 }, alice);
 
 			assert.strictEqual(res.body.some((note: any) => note.id === bobNote.id), false);
 			assert.strictEqual(res.body.some((note: any) => note.id === carolNote.id), true);
@@ -945,6 +945,22 @@ describe('Timelines', () => {
 
 			assert.strictEqual(res.body.some((note: any) => note.id === bobNote.id), true);
 			assert.strictEqual(res.body.find((note: any) => note.id === bobNote.id).text, 'hi');
+		});
+
+		test.concurrent('リスインしている自分の visibility: followers なノートが含まれる', async () => {
+			const [alice] = await Promise.all([signup(), signup()]);
+
+			const list = await api('/users/lists/create', { name: 'list' }, alice).then(res => res.body);
+			await api('/users/lists/push', { listId: list.id, userId: alice.id }, alice);
+			await sleep(1000);
+			const aliceNote = await post(alice, { text: 'hi', visibility: 'followers' });
+
+			await waitForPushToTl();
+
+			const res = await api('/notes/user-list-timeline', { listId: list.id }, alice);
+
+			assert.strictEqual(res.body.some((note: any) => note.id === aliceNote.id), true);
+			assert.strictEqual(res.body.find((note: any) => note.id === aliceNote.id).text, 'hi');
 		});
 
 		test.concurrent('リスインしているユーザーのチャンネルノートが含まれない', async () => {
