@@ -99,6 +99,8 @@ export class ApInboxService {
 				} catch (err) {
 					if (err instanceof Error || typeof err === 'string') {
 						this.logger.error(err);
+					} else {
+						throw err;
 					}
 				}
 			}
@@ -258,7 +260,7 @@ export class ApInboxService {
 
 		const targetUri = getApId(activity.object);
 
-		this.announceNote(actor, activity, targetUri);
+		await this.announceNote(actor, activity, targetUri);
 	}
 
 	@bindThis
@@ -293,7 +295,7 @@ export class ApInboxService {
 			} catch (err) {
 				// 対象が4xxならスキップ
 				if (err instanceof StatusError) {
-					if (err.isClientError) {
+					if (!err.isRetryable) {
 						this.logger.warn(`Ignored announce target ${targetUri} - ${err.statusCode}`);
 						return;
 					}
@@ -384,7 +386,7 @@ export class ApInboxService {
 		});
 
 		if (isPost(object)) {
-			this.createNote(resolver, actor, object, false, activity);
+			await this.createNote(resolver, actor, object, false, activity);
 		} else {
 			this.logger.warn(`Unknown type: ${getApType(object)}`);
 		}
@@ -415,7 +417,7 @@ export class ApInboxService {
 			await this.apNoteService.createNote(note, resolver, silent);
 			return 'ok';
 		} catch (err) {
-			if (err instanceof StatusError && err.isClientError) {
+			if (err instanceof StatusError && !err.isRetryable) {
 				return `skip ${err.statusCode}`;
 			} else {
 				throw err;
