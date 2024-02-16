@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: syuilo and other misskey contributors
+SPDX-FileCopyrightText: syuilo and misskey-project
 SPDX-License-Identifier: AGPL-3.0-only
 -->
 
@@ -55,7 +55,7 @@ function onClick(ev: MouseEvent) {
 			icon: 'ti ti-plus',
 			action: () => {
 				react(props.emoji);
-				sound.play('reaction');
+				sound.playMisskeySfx('reaction');
 			},
 		}] : [])], ev.currentTarget ?? ev.target);
 	}

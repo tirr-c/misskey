@@ -1,17 +1,17 @@
 /*
- * SPDX-FileCopyrightText: syuilo and other misskey contributors
+ * SPDX-FileCopyrightText: syuilo and misskey-project
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
 process.env.NODE_ENV = 'test';
 
 import * as assert from 'assert';
-import { signup, api, startServer, startJobQueue, port, post } from '../utils.js';
+import { api, port, post, signup, startJobQueue } from '../utils.js';
 import type { INestApplicationContext } from '@nestjs/common';
 import type * as misskey from 'misskey-js';
 
 describe('export-clips', () => {
-	let app: INestApplicationContext;
+	let queue: INestApplicationContext;
 	let alice: misskey.entities.SignupResponse;
 	let bob: misskey.entities.SignupResponse;
 
@@ -33,14 +33,13 @@ describe('export-clips', () => {
 	}
 
 	beforeAll(async () => {
-		app = await startServer();
-		await startJobQueue();
+		queue = await startJobQueue();
 		alice = await signup({ username: 'alice' });
 		bob = await signup({ username: 'bob' });
 	}, 1000 * 60 * 2);
 
 	afterAll(async () => {
-		await app.close();
+		await queue.close();
 	});
 
 	beforeEach(async () => {
