@@ -68,6 +68,7 @@ export class HttpRequestService {
 			lookup: cache.lookup as unknown as net.LookupFunction,
 			localAddress: config.outgoingAddress,
 			family: socketFamily,
+			autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 		});
 
 		this.https = new https.Agent({
@@ -76,6 +77,7 @@ export class HttpRequestService {
 			lookup: cache.lookup as unknown as net.LookupFunction,
 			localAddress: config.outgoingAddress,
 			family: socketFamily,
+			autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 		});
 
 		const maxSockets = Math.max(256, config.deliverJobConcurrency ?? 128);
@@ -90,6 +92,7 @@ export class HttpRequestService {
 				proxy: config.proxy,
 				localAddress: config.outgoingAddress,
 				family: socketFamily,
+				autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 			})
 			: this.http;
 
@@ -103,6 +106,7 @@ export class HttpRequestService {
 				proxy: config.proxy,
 				localAddress: config.outgoingAddress,
 				family: socketFamily,
+				autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 			})
 			: this.https;
 	}

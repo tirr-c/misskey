@@ -73,6 +73,7 @@ type Source = {
 
 	outgoingAddress?: string;
 	outgoingAddressFamily?: 'ipv4' | 'ipv6' | 'dual';
+	autoSelectFamilyAttemptTimeout?: number;
 
 	deliverJobConcurrency?: number;
 	inboxJobConcurrency?: number;
@@ -135,6 +136,7 @@ export type Config = {
 	id: string;
 	outgoingAddress: string | undefined;
 	outgoingAddressFamily: 'ipv4' | 'ipv6' | 'dual' | undefined;
+	autoSelectFamilyAttemptTimeout?: number;
 	deliverJobConcurrency: number | undefined;
 	inboxJobConcurrency: number | undefined;
 	relationshipJobConcurrency: number | undefined;
@@ -243,6 +245,7 @@ export function loadConfig(): Config {
 		clusterLimit: config.clusterLimit,
 		outgoingAddress: config.outgoingAddress,
 		outgoingAddressFamily: config.outgoingAddressFamily,
+		autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 		deliverJobConcurrency: config.deliverJobConcurrency,
 		inboxJobConcurrency: config.inboxJobConcurrency,
 		relationshipJobConcurrency: config.relationshipJobConcurrency,
