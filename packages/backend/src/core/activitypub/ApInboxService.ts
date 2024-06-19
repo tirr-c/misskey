@@ -300,6 +300,7 @@ export class ApInboxService {
 		const unlock = await this.appLockService.getApLock(uri);
 
 		try {
+			const targetUri = getApId(activity.object);
 			// 既に同じURIを持つものが登録されていないかチェック
 			const exist = await this.apNoteService.fetchNote(fromRelay ? targetUri : uri);
 			if (exist) {
