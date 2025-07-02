@@ -50,6 +50,18 @@ SPDX-License-Identifier: AGPL-3.0-only
 			</SearchMarker>
 
 			<SearchMarker
+				:label="i18n.ts.emojiMute"
+				:keywords="['emoji', 'mute', 'hide']"
+			>
+				<MkFolder>
+					<template #icon><i class="ti ti-mood-off"></i></template>
+					<template #label>{{ i18n.ts.emojiMute }}</template>
+
+					<XEmojiMute/>
+				</mkfolder>
+			</SearchMarker>
+
+			<SearchMarker
 				:label="i18n.ts.instanceMute"
 				:keywords="['note', 'server', 'instance', 'host', 'federation', 'mute', 'hide']"
 			>
@@ -68,13 +80,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<template #icon><i class="ti ti-repeat-off"></i></template>
 					<template #label><SearchLabel>{{ i18n.ts.mutedUsers }} ({{ i18n.ts.renote }})</SearchLabel></template>
 
-					<MkPagination :pagination="renoteMutingPagination">
-						<template #empty>
-							<div class="_fullinfo">
-								<img :src="infoImageUrl" draggable="false"/>
-								<div>{{ i18n.ts.noUsers }}</div>
-							</div>
-						</template>
+					<MkPagination :paginator="renoteMutingPaginator" withControl>
+						<template #empty><MkResult type="empty" :text="i18n.ts.noUsers"/></template>
 
 						<template #default="{ items }">
 							<div class="_gaps_s">
@@ -104,13 +111,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<template #icon><i class="ti ti-eye-off"></i></template>
 					<template #label>{{ i18n.ts.mutedUsers }}</template>
 
-					<MkPagination :pagination="mutingPagination">
-						<template #empty>
-							<div class="_fullinfo">
-								<img :src="infoImageUrl" draggable="false"/>
-								<div>{{ i18n.ts.noUsers }}</div>
-							</div>
-						</template>
+					<MkPagination :paginator="mutingPaginator" withControl>
+						<template #empty><MkResult type="empty" :text="i18n.ts.noUsers"/></template>
 
 						<template #default="{ items }">
 							<div class="_gaps_s">
@@ -142,13 +144,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<template #icon><i class="ti ti-ban"></i></template>
 					<template #label>{{ i18n.ts.blockedUsers }}</template>
 
-					<MkPagination :pagination="blockingPagination">
-						<template #empty>
-							<div class="_fullinfo">
-								<img :src="infoImageUrl" draggable="false"/>
-								<div>{{ i18n.ts.noUsers }}</div>
-							</div>
-						</template>
+					<MkPagination :paginator="blockingPaginator" withControl>
+						<template #empty><MkResult type="empty" :text="i18n.ts.noUsers"/></template>
 
 						<template #default="{ items }">
 							<div class="_gaps_s">
@@ -177,7 +174,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, markRaw } from 'vue';
+import XEmojiMute from './mute-block.emoji-mute.vue';
 import XInstanceMute from './mute-block.instance-mute.vue';
 import XWordMute from './mute-block.word-mute.vue';
 import MkPagination from '@/components/MkPagination.vue';
@@ -186,7 +184,7 @@ import { i18n } from '@/i18n.js';
 import { definePage } from '@/page.js';
 import MkUserCardMini from '@/components/MkUserCardMini.vue';
 import * as os from '@/os.js';
-import { instance, infoImageUrl } from '@/instance.js';
+import { instance } from '@/instance.js';
 import { ensureSignin } from '@/i.js';
 import MkInfo from '@/components/MkInfo.vue';
 import MkFolder from '@/components/MkFolder.vue';
@@ -194,23 +192,21 @@ import MkSwitch from '@/components/MkSwitch.vue';
 import { reloadAsk } from '@/utility/reload-ask.js';
 import { prefer } from '@/preferences.js';
 import MkFeatureBanner from '@/components/MkFeatureBanner.vue';
+import { Paginator } from '@/utility/paginator.js';
 
 const $i = ensureSignin();
 
-const renoteMutingPagination = {
-	endpoint: 'renote-mute/list' as const,
+const renoteMutingPaginator = markRaw(new Paginator('renote-mute/list', {
 	limit: 10,
-};
+}));
 
-const mutingPagination = {
-	endpoint: 'mute/list' as const,
+const mutingPaginator = markRaw(new Paginator('mute/list', {
 	limit: 10,
-};
+}));
 
-const blockingPagination = {
-	endpoint: 'blocking/list' as const,
+const blockingPaginator = markRaw(new Paginator('blocking/list', {
 	limit: 10,
-};
+}));
 
 const expandedRenoteMuteItems = ref([]);
 const expandedMuteItems = ref([]);

@@ -4,13 +4,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<MkPagination :pagination="pagination">
-	<template #empty>
-		<div class="_fullinfo">
-			<img :src="infoImageUrl" draggable="false"/>
-			<div>{{ i18n.ts.noUsers }}</div>
-		</div>
-	</template>
+<MkPagination :paginator="paginator">
+	<template #empty><MkResult type="empty" :text="i18n.ts.noUsers"/></template>
 
 	<template #default="{ items }">
 		<div :class="$style.root">
@@ -21,14 +16,13 @@ SPDX-License-Identifier: AGPL-3.0-only
 </template>
 
 <script lang="ts" setup>
-import type { Paging } from '@/components/MkPagination.vue';
+import type { Paginator } from '@/utility/paginator.js';
 import MkUserInfo from '@/components/MkUserInfo.vue';
 import MkPagination from '@/components/MkPagination.vue';
 import { i18n } from '@/i18n.js';
-import { infoImageUrl } from '@/instance.js';
 
 const props = withDefaults(defineProps<{
-	pagination: Paging;
+	paginator: Paginator;
 	noGap?: boolean;
 	extractor?: (item: any) => any;
 }>(), {
