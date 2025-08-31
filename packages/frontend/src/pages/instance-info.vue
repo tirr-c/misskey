@@ -8,7 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<div v-if="instance" class="_spacer" style="--MI_SPACER-w: 600px; --MI_SPACER-min: 16px; --MI_SPACER-max: 32px;">
 		<div v-if="tab === 'overview'" class="_gaps_m">
 			<div :class="$style.faviconAndName">
-				<img :src="faviconUrl" alt="" :class="$style.icon"/>
+				<img v-if="faviconUrl" :src="faviconUrl" alt="" :class="$style.icon"/>
 				<span :class="$style.name">{{ instance.name || `(${i18n.ts.unknown})` }}</span>
 			</div>
 			<div style="display: flex; flex-direction: column; gap: 1em;">
@@ -198,7 +198,7 @@ if (iAmModerator) {
 	});
 }
 
-async function fetch(): Promise<void> {
+async function _fetch_(): Promise<void> {
 	if (iAmAdmin) {
 		meta.value = await misskeyApi('admin/meta');
 	}
@@ -276,7 +276,7 @@ function refreshMetadata(): void {
 	});
 }
 
-fetch();
+_fetch_();
 
 const headerActions = computed(() => [{
 	text: `https://${props.host}`,
