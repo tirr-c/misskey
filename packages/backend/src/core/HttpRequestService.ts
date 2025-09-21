@@ -147,11 +147,18 @@ export class HttpRequestService {
 			lookup: false,	// nativeのdns.lookupにfallbackしない
 		});
 
+		const socketFamily = {
+			ipv4: 4,
+			ipv6: 6,
+			dual: 0,
+		}[config.outgoingAddressFamily ?? 'dual'];
+
 		const agentOption = {
 			keepAlive: true,
 			keepAliveMsecs: 30 * 1000,
 			lookup: cache.lookup as unknown as net.LookupFunction,
 			localAddress: config.outgoingAddress,
+			family: socketFamily,
 		};
 
 		this.httpNative = new http.Agent(agentOption);
@@ -173,6 +180,7 @@ export class HttpRequestService {
 				scheduling: 'lifo',
 				proxy: config.proxy,
 				localAddress: config.outgoingAddress,
+				family: socketFamily,
 			})
 			: this.http;
 
@@ -185,6 +193,7 @@ export class HttpRequestService {
 				scheduling: 'lifo',
 				proxy: config.proxy,
 				localAddress: config.outgoingAddress,
+				family: socketFamily,
 			})
 			: this.https;
 	}
