@@ -159,6 +159,7 @@ export class HttpRequestService {
 			lookup: cache.lookup as unknown as net.LookupFunction,
 			localAddress: config.outgoingAddress,
 			family: socketFamily,
+			autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 		};
 
 		this.httpNative = new http.Agent(agentOption);
@@ -181,6 +182,7 @@ export class HttpRequestService {
 				proxy: config.proxy,
 				localAddress: config.outgoingAddress,
 				family: socketFamily,
+				autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 			})
 			: this.http;
 
@@ -194,6 +196,7 @@ export class HttpRequestService {
 				proxy: config.proxy,
 				localAddress: config.outgoingAddress,
 				family: socketFamily,
+				autoSelectFamilyAttemptTimeout: config.autoSelectFamilyAttemptTimeout,
 			})
 			: this.https;
 	}
