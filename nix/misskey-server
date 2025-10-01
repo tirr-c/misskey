@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+if (( $# != 1 )); then
+	echo "Usage: $0 <config file>" >&2
+	false
+fi
+
+export PATH="@runtimePaths@"
+export LD_LIBRARY_PATH="@runtimeLibs@"
+export MISSKEY_CONFIG_YML="$(realpath $1)"
+
+backend_path="@app@/packages/backend"
+
+# pnpm migrate
+"$backend_path/node_modules/.bin/typeorm" migration:run -d ormconfig.js
+
+# pnpm check:connect
+node "$backend_path/scripts/check_connect.js"
+
+# pnpm start
+exec LD_PRELOAD="@preloadLib@" node "$backend_path/built/boot/entry.js"
