@@ -1,0 +1,25 @@
+diff --git a/packages/backend/src/config.ts b/packages/backend/src/config.ts
+index 2d65feca9..8de1b2e3f 100644
+--- a/packages/backend/src/config.ts
++++ b/packages/backend/src/config.ts
+@@ -219,19 +219,10 @@ export type FulltextSearchProvider = 'sqlLike' | 'sqlPgroonga' | 'meilisearch';
+ const _filename = fileURLToPath(import.meta.url);
+ const _dirname = dirname(_filename);
+ 
+-/**
+- * Path of configuration directory
+- */
+-const dir = `${_dirname}/../../../.config`;
+-
+ /**
+  * Path of configuration file
+  */
+-export const path = process.env.MISSKEY_CONFIG_YML
+-	? resolve(dir, process.env.MISSKEY_CONFIG_YML)
+-	: process.env.NODE_ENV === 'test'
+-		? resolve(dir, 'test.yml')
+-		: resolve(dir, 'default.yml');
++export const path = process.env.MISSKEY_CONFIG_YML ?? 'config.yml';
+ 
+ export function loadConfig(): Config {
+ 	const meta = JSON.parse(fs.readFileSync(`${_dirname}/../../../built/meta.json`, 'utf-8'));
