@@ -80,7 +80,7 @@ stdenv.mkDerivation (finalAttrs: {
     inherit pnpm;
     src = finalAttrs.src;
     fetcherVersion = 3;
-    hash = "";
+    hash = "sha256-zbPL37i7M0zD6mDhWl66M0b3CGcRXpJgh429DY7c2YY=";
   };
 
   SASS_EMBEDDED_BIN_PATH = "${dart-sass}/bin/sass";
