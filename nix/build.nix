@@ -92,7 +92,7 @@ stdenv.mkDerivation (finalAttrs: {
     inherit (finalAttrs) pname version;
     src = finalAttrs.srcMisskey;
     fetcherVersion = 2;
-    hash = "";
+    hash = "sha256-sJH4PWO2YuERBkgr9J82OteP8WHDIF9NBvVOMVcZosI=";
   };
 
   postPatch = ''
