@@ -1,0 +1,17 @@
+diff --git a/dist/lib/src/compiler-path.js b/dist/lib/src/compiler-path.js
+index 07dbb00963fc4f7315d273cb0bd5a5ec3c94d36d..79bebc6474531e1cdda2e41ae3a0d3d556b08ebe 100644
+--- a/dist/lib/src/compiler-path.js
++++ b/dist/lib/src/compiler-path.js
+@@ -8,6 +8,12 @@ const p = require("path");
+ const compiler_module_1 = require("./compiler-module");
+ /** The full command for the embedded compiler executable. */
+ exports.compilerCommand = (() => {
++    // Begin patch for Nix
++    const binPath = process.env.SASS_EMBEDDED_BIN_PATH;
++    if (binPath) {
++        return [binPath];
++    }
++    // End patch for Nix
+     try {
+         return [
+             require.resolve(`${compiler_module_1.compilerModule}/dart-sass/src/dart` +

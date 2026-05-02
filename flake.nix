@@ -38,6 +38,7 @@
           name = "misskey-dev";
 
           packages = with pkgs; [
+            dart-sass
             nodejs_22
             pnpm_11
 
@@ -45,6 +46,8 @@
             postgresql
             valkey
           ];
+
+          SASS_EMBEDDED_BIN_PATH = "${pkgs.dart-sass}/bin/sass";
         };
       }
     );

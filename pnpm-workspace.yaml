@@ -61,3 +61,5 @@ overrides:
 engineStrict: true
 saveExact: true
 shellEmulator: true
+patchedDependencies:
+  sass-embedded: patches/sass-embedded.patch
