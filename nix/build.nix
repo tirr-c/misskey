@@ -5,6 +5,7 @@
   makeWrapper,
   pnpmConfigHook,
 
+  dart-sass,
   nodejs,
   pnpm,
 
@@ -64,6 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
   strictDeps = true;
 
   nativeBuildInputs = [
+    dart-sass
     makeWrapper
     nodejs
     python3
@@ -82,6 +84,8 @@ stdenv.mkDerivation (finalAttrs: {
     fetcherVersion = 4;
     hash = "";
   };
+
+  SASS_EMBEDDED_BIN_PATH = "${dart-sass}/bin/sass";
 
   buildPhase = ''
     runHook preBuild
