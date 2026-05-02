@@ -91,6 +91,9 @@
 		"ignoredBuiltDependencies": [
 			"@sentry-internal/node-cpu-profiler",
 			"exifreader"
-		]
+		],
+		"patchedDependencies": {
+			"sass-embedded": "patches/sass-embedded.patch"
+		}
 	}
 }
