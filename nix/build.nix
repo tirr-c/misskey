@@ -4,6 +4,7 @@
   fetchPnpmDeps,
   pnpmConfigHook,
 
+  dart-sass,
   nodejs,
   pnpm,
 
@@ -63,6 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
   strictDeps = true;
 
   nativeBuildInputs = [
+    dart-sass
     nodejs
     python3
     pkg-config
@@ -80,6 +82,8 @@ stdenv.mkDerivation (finalAttrs: {
     fetcherVersion = 3;
     hash = "";
   };
+
+  SASS_EMBEDDED_BIN_PATH = "${dart-sass}/bin/sass";
 
   buildPhase = ''
     runHook preBuild
